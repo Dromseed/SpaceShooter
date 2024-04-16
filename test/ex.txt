@@ -1,0 +1,43 @@
+import pygame as py
+import math
+
+class Asteroid_ball:
+    def __init__(self, xPos : int, yPos : int, width : int, height : int, display : py.display):
+        self.SCREEN_WIDTH = 1280
+        self.SCREEN_HEIGHT = 960
+        self.x = xPos
+        self.y = yPos
+        self.width = width
+        self.height = height
+        
+        self.angle = 0
+        self.rotation_speed = 10
+        self.speed = 5
+        
+        self.display = display
+        self.image = py.transform.scale(py.image.load("image/asteroids/asteroid_ball.png"), (self.width, self.height))
+    
+    def draw(self):
+        rotate = py.transform.rotate(self.image, self.angle)
+        rotated_rect = rotate.get_rect(center=(self.x, self.y))
+        
+        self.display.blit(rotate, (self.x, self.y))
+    
+    def movement(self):
+        dx = self.speed * math.cos(math.radians(self.angle))
+        dy = -self.speed * math.sin(math.radians(self.angle))
+        self.x += dx
+        self.y += dy
+    
+        self.angle += self.rotation_speed
+        self.angle -= self.rotation_speed
+        #Check when the player leaves the out of bounds
+        
+        if self.x < -100:
+            self.x = self.SCREEN_WIDTH + 50
+        elif self.x > self.SCREEN_WIDTH + 50:
+            self.x = -100
+        if self.y < -100:
+            self.y = self.SCREEN_HEIGHT + 50
+        elif self.y > self.SCREEN_HEIGHT + 50:
+            self.y = -100
