@@ -1,0 +1,2 @@
+Q - Shoot;
+Arrows - Movement;
